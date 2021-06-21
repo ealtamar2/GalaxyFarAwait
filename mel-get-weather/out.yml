@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: An AWS Lambda application that calls the Lambda API.
+Resources:
+  function:
+    Properties:
+      CodeUri: s3://lambda-artifacts-46b539a6b71d3fa3/359634a2e4ccc50081136d1178996d58
+      Description: Call the AWS Lambda API
+      Handler: index.handler
+      Layers:
+      - Ref: libs
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      - AWSLambda_ReadOnlyAccess
+      - AWSXrayWriteOnlyAccess
+      - AmazonDynamoDBFullAccess
+      Runtime: nodejs12.x
+      Timeout: 10
+      Tracing: Active
+    Type: AWS::Serverless::Function
+  libs:
+    Properties:
+      CompatibleRuntimes:
+      - nodejs12.x
+      ContentUri: s3://lambda-artifacts-46b539a6b71d3fa3/6997a1f71091cc7b359b9a09c4b9ad8d
+      Description: Dependencies for the weather app.
+      LayerName: mel-get-weather-lib
+    Type: AWS::Serverless::LayerVersion
+Transform: AWS::Serverless-2016-10-31

@@ -1,0 +1,21 @@
+{
+	"years": 10,
+	"lanets": [{
+		"name": "Ferengi",
+		"isRigth": true,
+		"diaryDegrees": 1,
+		"sunDistance": 500
+	},
+	{
+		"name": "Betasoide",
+		"isRigth": true,
+		"diaryDegrees": 3,
+		"sunDistance": 2000
+	},
+	{
+		"name": "Vulcano",
+		"isRigth": false,
+		"diaryDegrees": 5,
+		"sunDistance": 1000
+	}]
+}

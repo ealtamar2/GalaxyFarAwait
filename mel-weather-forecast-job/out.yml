@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: An AWS Lambda application that calls the Lambda API.
+Resources:
+  function:
+    Properties:
+      CodeUri: s3://lambda-artifacts-a6afca9845b88e39/f94bf82612a58679ff42f507595e8492
+      Description: Java function
+      Handler: com.mel.galaxy.handler.Handler
+      MemorySize: 512
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      - AWSLambda_ReadOnlyAccess
+      - AWSXrayWriteOnlyAccess
+      - AWSLambdaVPCAccessExecutionRole
+      Runtime: java8
+      Timeout: 10
+      Tracing: Active
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31

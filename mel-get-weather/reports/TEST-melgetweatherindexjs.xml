@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+<testsuite name="mel-get-weather/index.js" errors="0" tests="3" failures="0" time="1.203" timestamp="2021-06-21T15:25:41">
+  <testcase classname="mel-get-weather/index.js" name="index.js: Success test" time="0.526"></testcase>
+  <testcase classname="mel-get-weather/index.js" name="index.js: Not found test" time="0.31"></testcase>
+  <testcase classname="mel-get-weather/index.js" name="index.js: Bad param test" time="0.362"></testcase>
+</testsuite>
+</testsuites>
