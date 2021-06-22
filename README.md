@@ -12,10 +12,16 @@ Donde, la primera funcion se encarga de simular calculando matemáticamente la r
 
 ![Gráfica](https://github.com/ealtamar2/GalaxyFarAwait/blob/main/mel-weather-forecast-job/images/Graphic.PNG)
 
-Además, se desplegaron los componentes en la 
+Además, se hicieron uso de las servicios de Amazon AWS:
 
-
-
+* Se creo una tabla de DynamoDB para almacenar los datos:
+  ![Dynamo](https://github.com/ealtamar2/GalaxyFarAway/blob/main/mel-weather-forecast-job/images/Dynamo.PNG)
+  
+* Se implementaron Lambdas:
+  ![Lambdas](https://github.com/ealtamar2/GalaxyFarAway/blob/main/mel-weather-forecast-job/images/CloudWatch.PNG)
+  
+* Se uso CloudWatch para generar el job:
+  ![Lambdas](https://github.com/ealtamar2/GalaxyFarAway/blob/main/mel-weather-forecast-job/images/Rules.PNG)
 
 
 Bonus:
