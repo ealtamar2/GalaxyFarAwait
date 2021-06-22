@@ -15,7 +15,7 @@ Utilice las siguientes instrucciones para implementar la aplicación de muestra.
 
 # Requisitos
 - [Node.js 10 with npm](https://nodejs.org/en/download/releases/)
-- consola Bash. Para Linux y macOS, esto se incluye de forma predeterminada. En Windows 10, puede instalar el [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) para obtener una versión de Ubuntu y Bash integrada en Windows.
+- Consola o terminal Bash. Para Linux y macOS, esto se incluye de forma predeterminada. En Windows 10, puede instalar el [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) para obtener una versión de Ubuntu y Bash integrada en Windows.
 - [The AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) v1.17 o posterior.
 
  Si usa AWS CLI v2, agregue lo siguiente a su [configuration file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) (`~/.aws/config`):
@@ -35,7 +35,7 @@ Descargue o clone el repositorio
     mel-get-weather$ ./scripts/1-create-bucket.sh
     make_bucket: lambda-artifacts-a5e491dbb5b22e0d
 
-To build a Lambda layer that contains the function's runtime dependencies, run `2-build-layer.sh`. Packaging dependencies in a layer reduces the size of the deployment package that you upload when you modify your code.
+Para crear una capa Lambda que contenga las dependencias en tiempo de ejecución de la función, ejecute `2-build-layer.sh`. El empaquetado de dependencias en una capa reduce el tamaño del paquete de implementación que carga cuando modifica su código.
 
     mel-get-weather$ ./scripts/2-build-layer.sh
 
