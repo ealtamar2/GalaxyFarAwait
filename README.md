@@ -1,6 +1,6 @@
-# Galaxy far await!
+# Mel Challenge - Galaxy far await!
 
-Para la implementación del proyecto se crearon dos varios componentes.
+Para la implementación del proyecto se crearon dos componentes.
 
 * Se creo una lambda function en Java 8 llamamda [mel-weather-forecast-job](https://github.com/ealtamar2/GalaxyFarAwait/tree/main/mel-weather-forecast-job).
   * [Ver Documentación](https://github.com/ealtamar2/GalaxyFarAwait/edit/main/mel-weather-forecast-job/README.md)
