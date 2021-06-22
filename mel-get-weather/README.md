@@ -1,54 +1,45 @@
-# Blank function (Node.js)
-This sample application is a Lambda function that calls the Lambda API. It shows the use of logging, environment variables, AWS X-Ray tracing, layers, unit tests and the AWS SDK. You can use it to learn about Lambda features or use it as a starting point for your own projects.
+# mel-get-weather function (Node.js)
 
-![Architecture](/sample-apps/mel-get-weather/images/sample-mel-get-weather.png)
+ Se creo esta Lambda function para consultar el pronostico del clima por día, esta funcion es implementada o expuesta por un servicio REST
+ por medio de APIGateway de Amazon
+
+![Architecture](/mel-get-weather/images/mel-get-weather.PNG)
 
 The project source includes function code and supporting resources:
 
-- `function` - A Node.js function.
-- `template.yml` - An AWS CloudFormation template that creates an application.
-- `1-create-bucket.sh`, `2-deploy.sh`, etc. - Shell scripts that use the AWS CLI to deploy and manage the application.
+- `function` - una Node.js function.
+- `template.yml` - una plantilla de AWS CloudFormation para desplegar la aplicación.
+- `1-create-bucket.sh`, `2-deploy.sh`, etc. -unos Shell scripts para configurar y/o desplegar la aplicación .
 
-Variants of this sample application are available for the following languages:
+Utilice las siguientes instrucciones para implementar la aplicación de muestra. Para ver en profundidad su arquitectura y características, consulte [Blank Function Sample Application for AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/samples-mel-get-weather.html) in the developer guide.
 
-- Python – [blank-python](/sample-apps/blank-python).
-- Ruby – [blank-ruby](/sample-apps/blank-ruby).
-- Java – [blank-java](/sample-apps/blank-java).
-- Go – [blank-go](/sample-apps/blank-go).
-- C# – [blank-csharp](/sample-apps/blank-csharp).
-- PowerShell – [blank-powershell](/sample-apps/blank-powershell).
-
-Use the following instructions to deploy the sample application. For an in-depth look at its architecture and features, see [Blank Function Sample Application for AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/samples-mel-get-weather.html) in the developer guide.
-
-# Requirements
+# Requisitos
 - [Node.js 10 with npm](https://nodejs.org/en/download/releases/)
-- The Bash shell. For Linux and macOS, this is included by default. In Windows 10, you can install the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to get a Windows-integrated version of Ubuntu and Bash.
-- [The AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) v1.17 or newer.
+- consola Bash. Para Linux y macOS, esto se incluye de forma predeterminada. En Windows 10, puede instalar el [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) para obtener una versión de Ubuntu y Bash integrada en Windows.
+- [The AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) v1.17 o posterior.
 
-If you use the AWS CLI v2, add the following to your [configuration file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) (`~/.aws/config`):
+ Si usa AWS CLI v2, agregue lo siguiente a su [configuration file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) (`~/.aws/config`):
 
 ```
 cli_binary_format=raw-in-base64-out
 ```
 
-This setting enables the AWS CLI v2 to load JSON events from a file, matching the v1 behavior.
+# Configuración
+Descargue o clone el repositorio 
 
-# Setup
-Download or clone this repository.
+    $ git clone https://github.com/ealtamar2/GalaxyFarAwait/tree/main/mel-get-weather
+    $ cd GalaxyFarAwait/tree/main/mel-get-weather
 
-    $ git clone https://github.com/awsdocs/aws-lambda-developer-guide.git
-    $ cd aws-lambda-developer-guide/sample-apps/mel-get-weather
+ Crear un bucket, ejecutar `scripts/1-create-bucket.sh`.
 
-To create a new bucket for deployment artifacts, run `1-create-bucket.sh`.
-
-    mel-get-weather$ ./1-create-bucket.sh
+    mel-get-weather$ ./scripts/1-create-bucket.sh
     make_bucket: lambda-artifacts-a5e491dbb5b22e0d
 
 To build a Lambda layer that contains the function's runtime dependencies, run `2-build-layer.sh`. Packaging dependencies in a layer reduces the size of the deployment package that you upload when you modify your code.
 
-    mel-get-weather$ ./2-build-layer.sh
+    mel-get-weather$ ./scripts/2-build-layer.sh
 
-# Deploy
+# Despliegue
 To deploy the application, run `3-deploy.sh`.
 
     mel-get-weather$ ./3-deploy.sh
@@ -62,43 +53,31 @@ To deploy the application, run `3-deploy.sh`.
 
 This script uses AWS CloudFormation to deploy the Lambda functions and an IAM role. If the AWS CloudFormation stack that contains the resources already exists, the script updates it with any changes to the template or function code.
 
-# Test
-To invoke the function, run `4-invoke.sh`.
+# Pruebas
+
+Ejecutar los siguientes comandos,
+
+* npm install
+* npm test
+
+Tambien se puede hacer uso de el script, Ejecutar `scripts/4-invoke.sh`.
 
     mel-get-weather$ ./4-invoke.sh
     {
-        "StatusCode": 200,
-        "ExecutedVersion": "$LATEST"
-    }
-    {"AccountLimit":{"TotalCodeSize":80530636800,"CodeSizeUnzipped":262144000,"CodeSizeZipped":52428800,"ConcurrentExecutions":1000,"UnreservedConcurrentExecutions":933},"AccountUsage":{"TotalCodeSize":303678359,"FunctionCount":75}}
+    "statusCode": "0",
+    "statusDesc": "SUCCESS",
+    "body": {
+        "weather": "Tiempo de Sequía",
+        "day": "360"
+    }}
 
-Let the script invoke the function a few times and then press `CRTL+C` to exit.
+Deje que el script invoque la función varias veces y luego presione `CRTL+C` para salir.
 
-The application uses AWS X-Ray to trace requests. Open the [X-Ray console](https://console.aws.amazon.com/xray/home#/service-map) to view the service map. The following service map shows the function calling Amazon S3.
 
-![Service Map](/sample-apps/mel-get-weather/images/mel-get-weather-servicemap.png)
-
-Choose a node in the main function graph. Then choose **View traces** to see a list of traces. Choose any trace to view a timeline that breaks down the work done by the function.
-
-![Trace](/sample-apps/mel-get-weather/images/mel-get-weather-trace.png)
-
-Finally, view the application in the Lambda console.
+Finalmente, vea la aplicación en la consola de Lambda
 
 *To view the application*
-1. Open the [applications page](https://console.aws.amazon.com/lambda/home#/applications) in the Lambda console.
-2. Choose **mel-get-weather**.
+1. Abrir [applications page](https://console.aws.amazon.com/lambda/home#/applications) en la consola de Lambda .
+2. Escoger **mel-get-weather**.
 
-  ![Application](/sample-apps/mel-get-weather/images/mel-get-weather-application.png)
 
-# Cleanup
-To delete the application, run `5-cleanup.sh`.
-
-    mel-get-weather$ ./5-cleanup.sh
-    Deleted mel-get-weather stack.
-    Delete deployment artifacts and bucket (lambda-artifacts-4475xmpl08ba7f8d)?y
-    delete: s3://lambda-artifacts-4475xmpl08ba7f8d/6f2edcce52085e31a4a5ba823dba2c9d
-    delete: s3://lambda-artifacts-4475xmpl08ba7f8d/3d3aee62473d249d039d2d7a37512db3
-    remove_bucket: lambda-artifacts-4475xmpl08ba7f8d
-    Delete function logs? (log group /aws/lambda/mel-get-weather-function-1RQTXMPLR0YSO)y
-
-The cleanup script delete's the application stack, which includes the function and execution role, and local build artifacts. You can choose to delete the bucket and function logs as well.
