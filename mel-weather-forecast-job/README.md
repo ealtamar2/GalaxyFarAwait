@@ -1,44 +1,47 @@
-# Basic function with minimal dependencies (Java)
+# mel-weather-forecast-job (Java)
 
-![Architecture](/sample-apps/mel-weather-forecast-job/images/sample-mel-weather-forecast-job.png)
+ Se creo esta Lambda function para implementar toda la logica relacionada con la predicción de los climas por día. Además, se guarda cada una
+ de los resultados en DynamoDB para su consulta. Actualmente se genero la data para 10 Años.
+ 
 
-The project source includes function code and supporting resources:
-- `src/main` - A Java function.
-- `src/test` - A unit test and helper classes.
-- `template.yml` - An AWS CloudFormation template that creates an application.
-- `build.gradle` - A Gradle build file.
-- `pom.xml` - A Maven build file.
-- `1-create-bucket.sh`, `2-deploy.sh`, etc. - Shell scripts that use the AWS CLI to deploy and manage the application.
+![Architecture](/mel-weather-forecast-job/images/weather-prediction-mel.PNG)
 
-Use the following instructions to deploy the sample application.
+La fuente del proyecto incluye código de función y recursos de apoyo
+- `src/main` - Una Java function.
+- `src/test` - Una prueba unitaria y una clase de ayuda.
+- `template.yml` - Una plantilla de AWS CloudFormation para desplegar la aplicación.
+- `pom.xml` - un archivo de dependencias Maven .
+- `1-create-bucket.sh`, `2-deploy.sh`, etc. - -unos Shell scripts para configurar y/o desplegar la aplicación.
 
-# Requirements
+Utilice las siguientes instrucciones para implementar la aplicación.
+
+# Requisitos
 - [Java 8 runtime environment (SE JRE)](https://www.oracle.com/java/technologies/javase-downloads.html)
-- [Gradle 5](https://gradle.org/releases/) or [Maven 3](https://maven.apache.org/docs/history.html)
-- The Bash shell. For Linux and macOS, this is included by default. In Windows 10, you can install the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) to get a Windows-integrated version of Ubuntu and Bash.
-- [The AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) v1.17 or newer.
+- Consola o terminal Bash. Para Linux y macOS, esto se incluye de forma predeterminada. En Windows 10, puede instalar el [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10) para obtener una versión de Ubuntu y Bash integrada en Windows.
+- [The AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) v1.17 o posterior.
+- [Maven](https://maven.apache.org/) - Manejador de dependencias
 
-If you use the AWS CLI v2, add the following to your [configuration file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) (`~/.aws/config`):
+ Si usa AWS CLI v2, agregue lo siguiente a su [configuration file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html) (`~/.aws/config`):
 
 ```
 cli_binary_format=raw-in-base64-out
 ```
 
-This setting enables the AWS CLI v2 to load JSON events from a file, matching the v1 behavior.
+Esta configuración permite que AWS CLI v2 cargue eventos JSON desde un archivo, que coincida con el comportamiento de v1.
 
-# Setup
-Download or clone this repository.
+# Configuración
+Descargue o clone el repositorio.
 
-    $ git clone https://github.com/awsdocs/aws-lambda-developer-guide.git
-    $ cd aws-lambda-developer-guide/sample-apps/mel-weather-forecast-job
+    $ git clone https://github.com/ealtamar2/GalaxyFarAwait/tree/main/mel-weather-forecast-job
+    $ cd GalaxyFarAwait/mel-weather-forecast-job
 
-To create a new bucket for deployment artifacts, run `1-create-bucket.sh`.
+Para crear un nuevo depósito para artefactos de implementación, ejecute `1-create-bucket.sh`.
 
     mel-weather-forecast-job$ ./1-create-bucket.sh
     make_bucket: lambda-artifacts-a5e4xmplb5b22e0d
 
-# Deploy
-To deploy the application, run `2-deploy.sh`.
+# Despliegue
+Para implementar la aplicación, ejecutar `2-deploy.sh`.
 
     mel-weather-forecast-job$ ./2-deploy.sh
     BUILD SUCCESSFUL in 1s
@@ -46,9 +49,9 @@ To deploy the application, run `2-deploy.sh`.
     Waiting for changeset to be created..
     Successfully created/updated stack - mel-weather-forecast-job
 
-This script uses AWS CloudFormation to deploy the Lambda functions and an IAM role. If the AWS CloudFormation stack that contains the resources already exists, the script updates it with any changes to the template or function code.
+Este script utiliza AWS CloudFormation para implementar las funciones de Lambda y un rol de IAM. Si la pila de AWS CloudFormation que contiene los recursos ya existe, el script la actualiza con cualquier cambio en la plantilla o el código de función.
 
-You can also build the application with Maven. To use maven, add `mvn` to the command.
+También puede crear la aplicación con Maven. Para usar maven, agregue `mvn` al comando.
 
     mel-weather-forecast-job$ ./2-deploy.sh mvn
     [INFO] Scanning for projects...
@@ -57,54 +60,29 @@ You can also build the application with Maven. To use maven, add `mvn` to the co
     [INFO] --------------------------------[ jar ]---------------------------------
     ...
 
-# Test
-To invoke the function, run `3-invoke.sh`.
+# Pruebas 
+
+* Ejecutar los siguientes comandos,
+
+    maven test
+
+* Tambien se puede ejecutar usando el script `3-invoke.sh`.
 
     mel-weather-forecast-job$ ./3-invoke.sh
-    {
-        "StatusCode": 200,
-        "ExecutedVersion": "$LATEST"
-    }
-    "200 OK"
+    
+    `{
+    "Tiempo de Sequía":20,
+    "Presión y temperatura óptimas":80,
+    "Día más LLuvioso":72,
+    "Desconocido":2362,
+    "Tiempo LLuvioso":1188
+    }`
 
-Let the script invoke the function a few times and then press `CRTL+C` to exit.
 
-The application uses AWS X-Ray to trace requests. Open the [X-Ray console](https://console.aws.amazon.com/xray/home#/service-map) to view the service map.
+Deje que el script invoque la función varias veces y luego presione `CRTL+C` para salir.
 
-![Service Map](/sample-apps/mel-weather-forecast-job/images/mel-weather-forecast-job-servicemap.png)
+# Limpiar
 
-Choose a node in the main function graph. Then choose **View traces** to see a list of traces. Choose any trace to view a timeline that breaks down the work done by the function.
-
-![Trace](/sample-apps/mel-weather-forecast-job/images/mel-weather-forecast-job-trace.png)
-
-# Configure Handler Class
-
-By default, the function uses a handler class named `Handler` that takes a map as input and returns a string. The project also includes handlers that use other input and output types. These are defined in the following files under src/main/java/com.mel.galaxy:
-
-- `Handler.java` – Takes a `Map<String,String>` as input.
-- `HandlerInteger.java` – Takes an `Integer` as input.
-- `HandlerList.java` – Takes a `List<Integer>` as input.
-- `HandlerDivide.java` – Takes a `List<Integer>` with two integers as input.
-- `HandlerStream.java` – Takes an `InputStream` and `OutputStream` as input.
-- `HandlerString.java` – Takes a `String` as input.
-- `HandlerWeatherData.java` – Takes a custom type as input.
-
-To use a different handler, change the value of the Handler setting in the application template (`template.yml` or `template-mvn.yaml`). For com.mel.galaxy, to use the list handler:
-
-    Properties:
-      CodeUri: build/distributions/mel-weather-forecast-job.zip
-      Handler: com.mel.galaxy.HandlerList
-
-Deploy the change, and then use the invoke script to test the new configuration. For handlers, that don't take a JSON object as input, pass the type (`string`, `int` or `list`) as an argument to the invoke script.
-
-    ./3-invoke.sh list
-    {
-        "StatusCode": 200,
-        "ExecutedVersion": "$LATEST"
-    }
-    9979
-
-# Cleanup
-To delete the application, run `4-cleanup.sh`.
+Para eliminar la aplicación, ejecute `4-cleanup.sh`.
 
     mel-weather-forecast-job$ ./4-cleanup.sh
