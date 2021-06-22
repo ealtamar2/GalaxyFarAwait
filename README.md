@@ -1,4 +1,4 @@
-# Mel Challenge - Galaxy far await!
+# Meli Challenge - Galaxy far away!
 
 Para la implementación del proyecto se crearon dos componentes.
 
@@ -7,6 +7,16 @@ Para la implementación del proyecto se crearon dos componentes.
     
 * Se creo una lamdba function en NodeJS  [mel-get-weather](https://github.com/ealtamar2/GalaxyFarAwait/tree/main/mel-get-weather).
   * [Ver Documentación](https://github.com/ealtamar2/GalaxyFarAwait/blob/main/mel-get-weather/README.md)    
+
+Donde, la primera funcion se encarga de simular calculando matemáticamente la rotacion de los planetas
+
+![Gráfica](https://github.com/ealtamar2/GalaxyFarAwait/blob/main/mel-weather-forecast-job/images/Graphic.PNG)
+
+Además, se desplegaron los componentes en la 
+
+
+
+
 
 Bonus:
   1. Para el job, se creo una regla de CloudWatch donde se invoca cada X tiempo la función [mel-weather-forecast-job](https://github.com/ealtamar2/GalaxyFarAwait/tree/main/mel-weather-forecast-job).
